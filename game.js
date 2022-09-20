@@ -26,13 +26,39 @@ var epic =      [
 var storage = [[],[],[],[]];
 var s ='';
 
-var money = 100;
-document.getElementById('money').innerHTML = `<p>Money : ${money}</p>`;
-function pencet(){
+var money = 1000;
+var gem = 0;
+document.getElementById('money').innerHTML = barUpdate(money,gem);
+function letGacha(type){
+    if(type == 'once'){
+        gacha();
+        
+    }
+    else if (gem >= 5 && type == '10x'){
+            gem-=5;
+            for(i=1;i<=10;i++){
+                gacha();
+            }
+        
+    }
+    else if (gem >= 10){
+            gem-=10;
+            a = Math.floor(money / 10);
+            for(i=1;i<=a;i++){
+                gacha();
+            }
+        }
+    else{
+        document.getElementById('hasil').innerHTML = `<p>Not Enough Gem!</p>`;
+    }
+}
+
+
+function gacha(){
     var indexProb = Math.floor(Math.random() * probability.length);
     var getProb = probability[indexProb];
-    if(getProb == 1 && money >= 1){
-        money--;
+    if(getProb == 1 && money >= 10){
+        money-=10;
         var indexQua = Math.floor(Math.random() * common[0].length);
         var name = common[0][indexQua];
         var img = common[1][indexQua];
@@ -45,13 +71,13 @@ function pencet(){
         }
         else{
             var a = storage[0].indexOf(name);
-        
+            
             storage[3][a]++;
         }
    
     }
-    else if(getProb == 2 && money >= 1){
-        money--;
+    else if(getProb == 2 && money >= 10){
+        money-=10;
         var indexQua = Math.floor(Math.random() * rare[0].length);
         var name = rare[0][indexQua];
         var img = rare[1][indexQua];
@@ -68,8 +94,8 @@ function pencet(){
             storage[3][a]++;
         }
     }
-    else if(getProb == 3 && money >= 1){
-        money--;
+    else if(getProb == 3 && money >= 10){
+        money-=10;
         var indexQua = Math.floor(Math.random() * epic[0].length);
         var name = epic[0][indexQua];
         var img = epic[1][indexQua];
@@ -96,7 +122,7 @@ function sell(f,n){
     var indexH = storage[0].indexOf(n);
     if (f == 'Common'){
         storage[3][indexH]--;
-        money+=.5;
+        money+=5;
         if(storage[3][indexH]<= 0){
             storage[0].splice(indexH,1);
             storage[1].splice(indexH,1);
@@ -106,16 +132,6 @@ function sell(f,n){
         
     }
     else if (f == 'Rare'){
-        storage[3][indexH]--;
-        money+=1;
-        if(storage[3][indexH]<= 0){
-            storage[0].splice(indexH,1);
-            storage[1].splice(indexH,1);
-            storage[2].splice(indexH,1);
-            storage[3].splice(indexH,1);
-        }
-    }
-    else{
         storage[3][indexH]--;
         money+=10;
         if(storage[3][indexH]<= 0){
@@ -125,12 +141,23 @@ function sell(f,n){
             storage[3].splice(indexH,1);
         }
     }
+    else{
+        storage[3][indexH]--;
+        money+=100;
+        if(storage[3][indexH]<= 0){
+            storage[0].splice(indexH,1);
+            storage[1].splice(indexH,1);
+            storage[2].splice(indexH,1);
+            storage[3].splice(indexH,1);
+            gem+=3;
+        }
+    }
     invenList();
 }
 function sellAll(f,n){
     var indexH = storage[0].indexOf(n);
     if (f == 'Common'){
-        money+= (.5 * storage[3][indexH]) ;
+        money+= (5 * storage[3][indexH]) ;
         storage[0].splice(indexH,1);
         storage[1].splice(indexH,1);
         storage[2].splice(indexH,1);
@@ -138,21 +165,47 @@ function sellAll(f,n){
         
     }
     else if (f == 'Rare'){
-        money+= (1 * storage[3][indexH]) ;
-        storage[0].splice(indexH,1);
-        storage[1].splice(indexH,1);
-        storage[2].splice(indexH,1);
-        storage[3].splice(indexH,1);
-    }
-    else{
         money+= (10 * storage[3][indexH]) ;
         storage[0].splice(indexH,1);
         storage[1].splice(indexH,1);
         storage[2].splice(indexH,1);
         storage[3].splice(indexH,1);
     }
+    else{
+        money+= (100 * storage[3][indexH]) ;
+        gem+=(3*storage[3][indexH]);
+        storage[0].splice(indexH,1);
+        storage[1].splice(indexH,1);
+        storage[2].splice(indexH,1);
+        storage[3].splice(indexH,1);
+        
+    }
     invenList();
 
+}
+function price(type,rarity){
+    if(type == 'sell'){
+        if(rarity == 'Common'){
+            return 5;
+        }
+        if(rarity == 'Rare'){
+            return 10;
+        }
+        else{
+            return 100;
+        }
+    }
+    else{
+        if(rarity == 'Common'){
+            return 10;
+        }
+        if(rarity == 'Rare'){
+            return 10;
+        }
+        else{
+            return 10;
+        }
+    }
 }
 function invenList(){
     
@@ -163,19 +216,37 @@ function invenList(){
             <img src="https://cutt.ly/${storage[1][k]}" alt="">
             <p>${storage[0][k]}</p>
             <p>${storage[2][k]}</p>
-            <p>Amount : ${storage[3][k]}</p>
-            <div onclick="sell('${storage[2][k]}','${storage[0][k]}')" class="sell">
-                Sell
-            </div>
-            <div onclick="sellAll('${storage[2][k]}','${storage[0][k]}')" class="sell">
-                Sell All
-            </div>
+            <p style="font-size:12px;opacity:0.7;">Amount  ${storage[3][k]}</p>
+            ${priceGemCost(storage[2][k])}
         </div>`
         ;
     }
     document.getElementById('inven').innerHTML = s;
-    document.getElementById('money').innerHTML = `<p>Money : ${money}</p>`;
+    document.getElementById('money').innerHTML =  barUpdate(money,gem);
 }
 function rewardNotif(name,img,rarity){
-    return`<img src="https://cutt.ly/${img}" alt=""> <p>you get <span>${name}</span>, ${rarity} Quality!</p>`
+    return`<img src="https://cutt.ly/${img}" alt=""> <p>You got <span>${name}</span>, ${rarity} Quality!</p>`
+}
+function barUpdate(money,gem){
+    return `<p><i class="fa-solid fa-coins"></i> ${money} <i class="fa-solid fa-gem"></i> ${gem}</p>`;
+}
+function priceGemCost(type){
+    if (type == 'Epic'){
+        return `            <div onclick="sell('${storage[2][k]}','${storage[0][k]}')" class="sell">
+                            +<i class="fa-solid fa-coins"></i> ${price('sell',storage[2][k])}
+                              +<i class="fa-solid fa-gem"></i> ${3}
+                            </div>
+                            <div onclick="sellAll('${storage[2][k]}','${storage[0][k]}')" class="sell">
+                            +<i class="fa-solid fa-coins"></i> ${storage[3][k]*price('sell',storage[2][k])}
+                             +<i class="fa-solid fa-gem"></i> ${storage[3][k]*3}
+                            </div>`
+    }
+    else{
+        return `            <div onclick="sell('${storage[2][k]}','${storage[0][k]}')" class="sell">
+                            +<i class="fa-solid fa-coins"></i> ${price('sell',storage[2][k])}
+                            </div>
+                            <div onclick="sellAll('${storage[2][k]}','${storage[0][k]}')" class="sell">
+                            +<i class="fa-solid fa-coins"></i> ${storage[3][k]*price('sell',storage[2][k])}
+                            </div>`
+    }
 }

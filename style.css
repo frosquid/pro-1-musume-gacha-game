@@ -4,23 +4,29 @@ html, body{
     width: 100%;
     font-family: 'Work Sans', sans-serif;
     text-align: center;
+    
 }
+div{}
 p{
     margin: 0;
     padding: 10px 0;
 }
 
 .tombol{
-    padding: 10px 30px;
-    background-color: green;
-    color: white;
-    display: inline;
+    width: 1fr;
+    padding: 10px 0;
+    border: 1px solid #dadce0;
+    color: #174ea6;
+    display: inline-block;
     cursor: pointer;
     user-select: none;
+    margin: 0;
+    margin-top: 10px;
+    border-radius: 10px;
+
 }
-.tombol:hover{  
-    background-color: greenyellow;
-    color: black;
+.tombol:hover,.sell:hover{  
+    background-color: #fafafa;
 }
 .content{
     display: flex;
@@ -41,6 +47,12 @@ p{
     display: flex;
     place-items: center;
     place-content: center;
+}
+.gachabuttons{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 10px;
 }
 .inven{
     margin: 0 auto;
@@ -103,8 +115,8 @@ p{
 
 .sell{
     user-select: none;
-    background-color: greenyellow;
-    color: black;
+    border: 1px solid #dadce0;
+    color: #174ea6;
     text-align: center;
     padding: 6px 0;
 }
