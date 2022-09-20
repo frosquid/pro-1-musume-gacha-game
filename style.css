@@ -1,0 +1,126 @@
+
+html, body{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-family: 'Work Sans', sans-serif;
+
+    
+
+}
+p{
+    margin: 0;
+    padding: 10px 0;
+}
+
+.tombol{
+    padding: 10px 30px;
+    background-color: green;
+    color: white;
+    display: inline;
+    cursor: pointer;
+    user-select: none;
+}
+.tombol:hover{  
+    background-color: greenyellow;
+    color: black;
+}
+.content{
+    display: flex;
+    place-items: center;
+    width: 70%;
+    margin: 30px auto;
+    margin-bottom: ;
+}
+.gacha{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
+}
+.bar{
+    width: 100%;
+    display: flex;
+    place-items: center;
+    place-content: center;
+}
+.inven{
+    margin: 0 auto;
+    width: 70%;
+    display: grid;
+    grid-template-columns: repeat(5,1fr);
+    margin-bottom: 15px;
+    gap: 10px;
+    overflow: auto;
+}
+.content .gacha .hasil{
+    display: inline;
+    display: flex;
+    flex-direction: column;
+    place-items: center;
+    place-content: center;
+}
+.content .gacha .hasil{
+    height:200px;
+}
+.card{
+    background-color: white;
+    display: flex;
+    justify-items: center;
+    flex-direction: column;
+    padding: 10px;
+    border:1px solid #dadce0;
+    text-align: center;
+    border-radius: 10px;
+
+}
+.card p:nth-child(2){
+    font-weight: bolder;
+    font-size: 20px;
+}
+.card p:nth-child(3){
+    font-weight: bold;
+   
+}
+.sell{
+    cursor: pointer;
+}
+.Common p:nth-child(3){
+    background-color: #f6f6f6;
+}
+.Rare p:nth-child(3){
+    background-color: #abcaff;
+}
+.Epic p:nth-child(3){
+    background-color: #a63fff;
+    color: white;
+}
+.hasil{
+    overflow: auto;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+.sell{
+    user-select: none;
+    background-color: greenyellow;
+    color: black;
+    text-align: center;
+    padding: 6px 0;
+}
+.sell:last-child{
+    margin-top: 10px;
+}
+span{
+    font-weight: bold;
+}
+@media screen and (max-width: 970px) {
+    .inven{
+        width: 95%;
+        grid-template-columns: repeat(2,1fr);
+    }
+    .content{
+        width: 95%;
+    }
+}
