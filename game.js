@@ -1,8 +1,8 @@
 
 // var untuk menentukan probabilitas dalam gacha
-var probabilitasGacha = probabilitas(90,9,1);
+var probabilitasGacha = probabilitas(75,21,4);
 // var uang untuk ekonomi di game
-var uang = 100;
+var uang = 1000;
 // var gem untuk ekonomi di game
 var berlian = 0;
 // ini var penyimpanan untuk menyimpan data hasil gacha dalam bentuk multi dimensi array
