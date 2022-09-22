@@ -2,7 +2,7 @@
 // var untuk menentukan probabilitas dalam gacha
 var probabilitasGacha = probabilitas(90,9,1);
 // var uang untuk ekonomi di game
-var uang = 1000;
+var uang = 100;
 // var gem untuk ekonomi di game
 var berlian = 0;
 // ini var penyimpanan untuk menyimpan data hasil gacha dalam bentuk multi dimensi array
@@ -94,7 +94,6 @@ function aturData(perintah,data){
                         // menambah lapisan ke data
                         data.push([arguments[i+2]])
                     }
-                    console.log('buat data layer baru');
                 }
                 // jika lapis data pertama panjangnya lebih kecil dari panjang argumen dan panjang argumen lebih kecil dari panjang seluruh layer di data
                 else if(data[0].length <= arguments.length && arguments.length-2 <= data.length){
@@ -142,20 +141,16 @@ function cetakHasilGacha(kelangkaan,harga,dataKelangkaan){
     uang-=harga;
     // var menentukan kuliatas gacha 
     var menentukanQualitasGacha = Math.floor(Math.random() * dataKelangkaan[0].length);
-
+    // var namaKarakter
     var nama = dataKelangkaan[0][menentukanQualitasGacha];
+    // var gambar
     var gambar = dataKelangkaan[1][menentukanQualitasGacha];
     document.getElementById('hasil').innerHTML = rewardNotif(nama,gambar,kelangkaan);
     if(penyimpananKarakter[1] == undefined){
-        console.log('iasa');
-        console.log(nama+gambar+kelangkaan);
         aturData('tambah',penyimpananKarakter,nama,gambar,kelangkaan,1)
-        console.log(penyimpananKarakter);
     }
     else if(!penyimpananKarakter[0].includes(nama)){
-        console.log('asasi');
         aturData('tambah',penyimpananKarakter,nama,gambar,kelangkaan,1)
-        console.log(penyimpananKarakter);
     }
     else{
         var a = penyimpananKarakter[0].indexOf(nama);
@@ -182,7 +177,6 @@ function gacha(){
 }
 function sell(f,n){
     var indexH = penyimpananKarakter[0].indexOf(n);
-    console.log(indexH);
     if (f == 'Common'){
         penyimpananKarakter[3][indexH]--;
         uang+=5;
